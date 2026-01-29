@@ -1,0 +1,118 @@
+# Symfony Development Environment - Docker Compose Template
+# =========================================================
+# Common services for Symfony applications.
+# Copy this file to your project root and customize as needed.
+#
+# Usage:
+#   docker compose up -d    # Start all services
+#   docker compose down     # Stop all services
+#   docker compose logs -f  # View logs
+#   docker compose ps       # List running services
+#
+# Note: Symfony CLI automatically detects running Docker services and exposes
+# them to your application via environment variables. Using short port syntax
+# (e.g., ports: [5432]) exposes ports without binding to the host machine.
+# Run `symfony var:export --multiline` to see the detected environment variables.
+
+services:
+  # ===========================================================================
+  # Database - PostgreSQL
+  # ===========================================================================
+  database:
+    image: postgres:16-alpine
+    pull_policy: always
+    # Uncomment to hard-label the service for use with Symfony Server
+    #labels:
+    #  com.symfony.server.service-prefix: 'DATABASE'
+    ports: [5432]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER:-app}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ===========================================================================
+  # Message Queue - RabbitMQ
+  # ===========================================================================
+  # Useful for Symfony Messenger async processing
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    pull_policy: always
+    ports:
+      - 5672
+      # - "15672:15672"  # Uncomment to access Management UI at http://localhost:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq:rw
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ===========================================================================
+  # Optional Services (uncomment as needed)
+  # ===========================================================================
+
+  # ---------------------------------------------------------------------------
+  # Cache - Redis
+  # ---------------------------------------------------------------------------
+  # redis:
+  #   image: redis:7-alpine
+  #   pull_policy: always
+  #   ports: [6379]
+  #   volumes:
+  #     - redis_data:/data:rw
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #   restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Search - Elasticsearch
+  # ---------------------------------------------------------------------------
+  # elasticsearch:
+  #   image: elasticsearch:8.12.0
+  #   pull_policy: always
+  #   ports: [9200]
+  #   environment:
+  #     - discovery.type=single-node
+  #     - xpack.security.enabled=false
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #   volumes:
+  #     - elasticsearch_data:/usr/share/elasticsearch/data:rw
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health | grep -q '\"status\":\"green\"\\|\"status\":\"yellow\"'"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #   restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # Mail Catcher - Mailpit (for development)
+  # ---------------------------------------------------------------------------
+  # mailpit:
+  #   image: axllent/mailpit:latest
+  #   pull_policy: always
+  #   ports:
+  #     - 1025
+  #     # - "8025:8025"  # Uncomment to access Web UI at http://localhost:8025
+  #   restart: unless-stopped
+
+volumes:
+  database_data:
+  rabbitmq_data:
+  # redis_data:
+  # elasticsearch_data:

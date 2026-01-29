@@ -1,0 +1,94 @@
+# Symfony Development Environment - Brewfile Template
+# ====================================================
+# This file defines the Homebrew dependencies for a typical Symfony project.
+# Copy this file to your project root and run `brew bundle` to install.
+#
+# Usage:
+#   brew bundle              # Install all dependencies
+#   brew bundle check        # Verify all dependencies are installed
+#   brew bundle cleanup      # Remove unused dependencies
+#
+# Documentation: https://github.com/Homebrew/homebrew-bundle
+
+# =============================================================================
+# Taps (Third-party repositories)
+# =============================================================================
+
+# PHP versions and extensions from shivammathur
+# https://github.com/shivammathur/homebrew-php
+tap "shivammathur/php"
+
+# Symfony CLI
+# https://github.com/symfony-cli/homebrew-tap
+tap "symfony-cli/tap"
+
+# =============================================================================
+# PHP
+# =============================================================================
+
+# PHP 8.5 (or change to your required version: php@8.4, php@8.3)
+brew "shivammathur/php/php@8.5", link: true, overwrite: true
+
+# =============================================================================
+# PHP Extensions
+# =============================================================================
+# Uncomment (or add) the extensions your project needs.
+# Note: Some extensions are bundled with PHP and don't need separate installation.
+
+# AMQP (RabbitMQ)
+# brew "shivammathur/php/php@8.5-amqp"
+
+# Redis
+# brew "shivammathur/php/php@8.5-redis"
+
+# Xdebug (Debugging and profiling)
+# brew "shivammathur/php/php@8.5-xdebug"
+
+# =============================================================================
+# Package Managers & Build Tools
+# =============================================================================
+
+# Composer - PHP dependency manager
+# https://getcomposer.org/
+brew "composer", link: true, overwrite: true
+
+# Node.js - For frontend assets (Webpack Encore, etc.)
+# Uncomment if your project uses JavaScript/TypeScript
+# brew "node"
+
+# Yarn - Alternative to npm
+# Uncomment if your project uses Yarn
+# brew "yarn"
+
+# =============================================================================
+# Symfony CLI / Webserver
+# =============================================================================
+
+# add certutil for firefox
+brew "nss"
+
+# Symfony CLI - Local web server, TLS certificates, and more
+# https://symfony.com/download
+brew "symfony-cli/tap/symfony-cli"
+
+# =============================================================================
+# Databases & Services (Optional - Alternative to Docker)
+# =============================================================================
+# These can run natively instead of in Docker containers.
+# Uncomment if you prefer native services over Docker.
+
+# PostgreSQL
+# brew "postgresql@16"
+
+# Redis
+# brew "redis"
+
+# =============================================================================
+# Development Tools (Optional)
+# =============================================================================
+
+# Git (usually pre-installed on macOS)
+# brew "git"
+
+# jq - JSON processor (useful for API development)
+# brew "jq"
