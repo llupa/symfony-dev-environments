@@ -1,17 +1,24 @@
 # Symfony Local Development Environments
 
-A comprehensive guide for setting up local Symfony development environments across different operating systems.
+Guides and templates for running Symfony applications locally across macOS, Linux, and Windows.
 
 ## Overview
 
-This repository provides step-by-step instructions, templates, and automation scripts to help you quickly set up a local development environment for Symfony applications. Whether you're on macOS, Linux, or Windows, you'll find everything you need to get started.
+This repository helps development teams maintain consistency across different operating systems. By adding a `Brewfile`, `Makefile`, and `docker-compose.yaml` to your Symfony project, every team member can set up their local environment with:
+
+```bash
+make install  # Install PHP, Composer, Symfony CLI
+make run      # Start Docker services and web server
+```
+
+Same commands. Same PHP version. Same services. Any OS.
 
 ## What's Included
 
-- **Brewfile** - Homebrew dependencies for PHP, Composer, and Symfony CLI
-- **Makefile** - Common automation commands for installation and running your app
-- **Docker support** - Container orchestration via Docker Compose
-- **Symfony CLI** - Local web server with HTTPS support
+- **Brewfile template** - Homebrew dependencies for PHP, Composer, and Symfony CLI
+- **Makefile template** - Common automation commands for installation and running your app
+- **docker-compose.yaml template** - Container services setup (PostgreSQL, RabbitMQ, etc.)
+- **OS-specific guides** - Step-by-step installation instructions for each platform
 
 ## Choose Your Operating System
 
