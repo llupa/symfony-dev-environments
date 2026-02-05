@@ -36,13 +36,6 @@ Ready-to-use templates to bootstrap your Symfony project:
 - [Makefile](templates/Makefile) - Automation commands
 - [docker-compose.yaml](templates/docker-compose.yaml) - Container services (PostgreSQL, RabbitMQ)
 
-## Quick Start
-
-1. Choose your OS guide from the table above
-2. Copy the templates to your Symfony project root
-3. Run `make install` to install dependencies
-4. Run `make run` to start your development environment
-
 ## Prerequisites
 
 All platforms require:
@@ -62,12 +55,15 @@ your-symfony-project/
 └── ...
 ```
 
-## Support
+## Recognitions
 
-If you encounter issues, check the troubleshooting section in each OS-specific guide.
+This guide is based on information gathered from colleagues across different platforms. Special thanks to:
+- [@dracoblue](https://github.com/dracoblue) 
+- [@niepi](https://github.com/niepi)
+- [@mlsvd](https://github.com/mlsvd)
 
 ## Contributing
-
-This guide is based on information gathered from colleagues across different platforms. I can only personally verify the macOS setup, so contributions and troubleshooting help for Linux and Windows (WSL) are especially welcome.
+ 
+I can only personally verify the macOS setup, so contributions and troubleshooting help for Linux and Windows (WSL) are especially welcome.
 
 Feel free to open issues or submit pull requests to improve these guides.
